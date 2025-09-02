@@ -1,3 +1,4 @@
+import { AppInput } from "@/components/AppInput";
 import { useForm } from "react-hook-form";
 
 export interface FormLoginParams {
@@ -12,5 +13,24 @@ export const LoginForm = () => {
     formState: { isSubmitting },
   } = useForm<FormLoginParams>();
 
-  return <></>;
+  return (
+    <>
+      <AppInput
+        control={control}
+        name="email"
+        label="EMAIL"
+        leftIconName="mail-outline"
+        placeholder="mail@example.com"
+      />
+
+      <AppInput
+        control={control}
+        name="password"
+        label="SENHA"
+        placeholder="Sua senha"
+        leftIconName="mail-outline"
+        secureTextEntry
+      />
+    </>
+  );
 };
