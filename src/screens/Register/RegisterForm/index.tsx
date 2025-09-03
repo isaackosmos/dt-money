@@ -10,7 +10,7 @@ import { AppButton } from "@/components/AppButton";
 import { schema } from "./schema";
 import { PublicStackParamsList } from "@/routes/PublicRoutes";
 
-interface RegisterFormParams {
+export interface FormRegisterParams {
   email: string;
   name: string;
   password: string;
@@ -22,7 +22,7 @@ export const RegisterForm = () => {
     control,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<RegisterFormParams>({
+  } = useForm<FormRegisterParams>({
     defaultValues: {
       name: "",
       email: "",
