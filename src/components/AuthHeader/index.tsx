@@ -1,5 +1,6 @@
-import { useKeyboardVisible } from "@/shared/hooks/useKeyboardVisible";
 import { Image, View } from "react-native";
+
+import { useKeyboardVisible } from "@/shared/hooks/useKeyboardVisible";
 
 export const AuthHeader = () => {
   const keyboardIsVisible = useKeyboardVisible();

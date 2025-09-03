@@ -1,8 +1,9 @@
 import { useRef, useState } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
+import { Text, TextInputProps, TouchableOpacity, View } from "react-native";
+
 import { TextInput } from "react-native-gesture-handler";
 import { Control, Controller, FieldValues, Path } from "react-hook-form";
-import { Text, TextInputProps, TouchableOpacity, View } from "react-native";
 
 import { colors } from "@/shared/colors";
 

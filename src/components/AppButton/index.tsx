@@ -1,7 +1,9 @@
 import { FC, PropsWithChildren } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Text, TouchableOpacity, TouchableOpacityProps } from "react-native";
+
 import clsx from "clsx";
+
 import { colors } from "@/shared/colors";
 
 type AppButtonMode = "fill" | "outline";

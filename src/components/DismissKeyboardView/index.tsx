@@ -1,6 +1,7 @@
 import { FC, PropsWithChildren } from "react";
-import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
+
+import { ScrollView } from "react-native-gesture-handler";
 import {
   Keyboard,
   KeyboardAvoidingView,
