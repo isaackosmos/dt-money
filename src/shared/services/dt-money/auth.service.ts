@@ -1,5 +1,5 @@
-import { FormLoginParams } from "@/screens/Login/LoginForm";
 import { dtMoneyApi } from "@/shared/api/dt-money";
+import { FormLoginParams } from "@/screens/Login/LoginForm";
 import { IAuthenticateResponse } from "@/shared/interfaces/https/authenticate-response";
 
 export const authenticate = async (

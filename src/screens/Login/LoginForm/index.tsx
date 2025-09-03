@@ -9,6 +9,8 @@ import { AppButton } from "@/components/AppButton";
 
 import { schema } from "./schema";
 import { PublicStackParamsList } from "@/routes/PublicRoutes";
+import { useAuthContext } from "@/context/auth.context";
+import { AxiosError } from "axios";
 
 export interface FormLoginParams {
   email: string;
@@ -30,8 +32,15 @@ export const LoginForm = () => {
 
   const navigation = useNavigation<NavigationProp<PublicStackParamsList>>();
 
-  const onSubmit = () => {};
+  const { handleAuth } = useAuthContext();
 
+  const onSubmit = async (userData: FormLoginParams) => {
+    try {
+      await handleAuth(userData);
+    } catch (error) {
+      if (error instanceof AxiosError) console.log(error.response?.data);
+    }
+  };
   return (
     <>
       <AppInput
