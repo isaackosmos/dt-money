@@ -5,12 +5,14 @@ import {
   useContext,
   useState,
 } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { FormLoginParams } from "@/screens/Login/LoginForm";
 import { FormRegisterParams } from "@/screens/Register/RegisterForm";
 
 import { IUser } from "@/shared/interfaces/user-interface";
 import * as authService from "@/shared/services/dt-money/auth.service";
+import { IAuthenticateResponse } from "@/shared/interfaces/https/authenticate-response";
 
 type AuthContextType = {
   user: IUser | null;
@@ -18,6 +20,7 @@ type AuthContextType = {
   handleAuth: (params: FormLoginParams) => Promise<void>;
   handleRegister: (params: FormRegisterParams) => Promise<void>;
   handleLogout: () => void;
+  restoreUserSession: () => Promise<string | null>;
 };
 
 export const AuthContext = createContext<AuthContextType>(
@@ -30,20 +33,45 @@ export const AuthContextProvider: FC<PropsWithChildren> = ({ children }) => {
 
   const handleAuth = async (userData: FormLoginParams) => {
     const { token, user } = await authService.authenticate(userData);
+    await AsyncStorage.setItem(
+      "dt-money-user",
+      JSON.stringify({ user, token })
+    );
     setUser(user);
     setToken(token);
   };
   const handleRegister = async (formData: FormRegisterParams) => {
     const { token, user } = await authService.registerUser(formData);
+    await AsyncStorage.setItem(
+      "dt-money-user",
+      JSON.stringify({ user, token })
+    );
     setUser(user);
     setToken(token);
   };
 
   const handleLogout = () => {};
 
+  const restoreUserSession = async () => {
+    const userData = await AsyncStorage.getItem("dt-money-user");
+    if (userData) {
+      const { user, token } = JSON.parse(userData) as IAuthenticateResponse;
+      setUser(user);
+      setToken(token);
+    }
+    return userData;
+  };
+
   return (
     <AuthContext.Provider
-      value={{ user, token, handleAuth, handleRegister, handleLogout }}
+      value={{
+        user,
+        token,
+        handleAuth,
+        handleRegister,
+        handleLogout,
+        restoreUserSession,
+      }}
     >
       {children}
     </AuthContext.Provider>

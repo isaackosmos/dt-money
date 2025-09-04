@@ -12,7 +12,11 @@ const NavigationRoutes = () => {
   const { user, token } = useAuthContext();
 
   const Routes = useCallback(() => {
-    return user && token ? <PrivateRoutes /> : <PublicRoutes />;
+    if (!user && !token) {
+      return <PublicRoutes />;
+    } else {
+      return <PrivateRoutes />;
+    }
   }, []);
 
   return (
