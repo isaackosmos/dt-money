@@ -11,6 +11,7 @@ import { schema } from "./schema";
 import { PublicStackParamsList } from "@/routes/PublicRoutes";
 import { useAuthContext } from "@/context/auth.context";
 import { AxiosError } from "axios";
+import { useSnackBarContext } from "@/context/snackBar.context";
 
 export interface FormLoginParams {
   email: string;
@@ -33,12 +34,17 @@ export const LoginForm = () => {
   const navigation = useNavigation<NavigationProp<PublicStackParamsList>>();
 
   const { handleAuth } = useAuthContext();
+  const { notify } = useSnackBarContext();
 
   const onSubmit = async (userData: FormLoginParams) => {
     try {
       await handleAuth(userData);
     } catch (error) {
-      if (error instanceof AxiosError) console.log(error.response?.data);
+      if (error instanceof AxiosError)
+        notify({
+          message: error.message ?? "Falha ao realizar o login.",
+          type: "ERROR",
+        });
     }
   };
   return (

@@ -1,12 +1,19 @@
 import "./src/styles/global.css";
 
-import NavigationRoutes from "@/routes";
+import { SnackBar } from "@/components/SnackBar";
+
 import { AuthContextProvider } from "@/context/auth.context";
+import { SnackBarContextProviver } from "@/context/snackBar.context";
+
+import NavigationRoutes from "@/routes";
 
 export default function App() {
   return (
-    <AuthContextProvider>
-      <NavigationRoutes />
-    </AuthContextProvider>
+    <SnackBarContextProviver>
+      <AuthContextProvider>
+        <NavigationRoutes />
+        <SnackBar />
+      </AuthContextProvider>
+    </SnackBarContextProviver>
   );
 }
