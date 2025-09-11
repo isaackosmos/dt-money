@@ -1,4 +1,4 @@
-import { Text, View } from "react-native";
+import { ActivityIndicator, Text, View } from "react-native";
 
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -7,11 +7,12 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { AppInput } from "@/components/AppInput";
 import { AppButton } from "@/components/AppButton";
 
-import { schema } from "./schema";
-import { PublicStackParamsList } from "@/routes/PublicRoutes";
 import { useAuthContext } from "@/context/auth.context";
-import { AxiosError } from "axios";
-import { useSnackBarContext } from "@/context/snackBar.context";
+import { PublicStackParamsList } from "@/routes/PublicRoutes";
+import { useErrorHandler } from "@/shared/hooks/useErrorHandler";
+
+import { schema } from "./schema";
+import { colors } from "@/shared/colors";
 
 export interface FormLoginParams {
   email: string;
@@ -34,19 +35,16 @@ export const LoginForm = () => {
   const navigation = useNavigation<NavigationProp<PublicStackParamsList>>();
 
   const { handleAuth } = useAuthContext();
-  const { notify } = useSnackBarContext();
+  const { handleError } = useErrorHandler();
 
   const onSubmit = async (userData: FormLoginParams) => {
     try {
       await handleAuth(userData);
     } catch (error) {
-      if (error instanceof AxiosError)
-        notify({
-          message: error.message ?? "Falha ao realizar o login.",
-          type: "ERROR",
-        });
+      handleError(error, "Falha ao logar.");
     }
   };
+
   return (
     <>
       <AppInput
@@ -68,7 +66,7 @@ export const LoginForm = () => {
 
       <View className="flex-1 justify-between mt-8 mb-6 min-h-[250px]">
         <AppButton iconName="arrow-forward" onPress={handleSubmit(onSubmit)}>
-          Login
+          {isSubmitting ? <ActivityIndicator color={colors.white} /> : "Login"}
         </AppButton>
 
         <View>

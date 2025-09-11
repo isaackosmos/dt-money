@@ -1,5 +1,6 @@
-import { useSnackBarContext } from "@/context/snackBar.context";
 import { Text, View } from "react-native";
+
+import { useSnackBarContext } from "@/context/snackBar.context";
 
 export const SnackBar = () => {
   const { type, message } = useSnackBarContext();

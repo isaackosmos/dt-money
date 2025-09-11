@@ -1,6 +1,5 @@
-import { Text, View } from "react-native";
+import { ActivityIndicator, Text, View } from "react-native";
 
-import { AxiosError } from "axios";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { NavigationProp, useNavigation } from "@react-navigation/native";
@@ -8,9 +7,12 @@ import { NavigationProp, useNavigation } from "@react-navigation/native";
 import { AppInput } from "@/components/AppInput";
 import { AppButton } from "@/components/AppButton";
 
-import { schema } from "./schema";
-import { PublicStackParamsList } from "@/routes/PublicRoutes";
 import { useAuthContext } from "@/context/auth.context";
+import { PublicStackParamsList } from "@/routes/PublicRoutes";
+import { useErrorHandler } from "@/shared/hooks/useErrorHandler";
+
+import { schema } from "./schema";
+import { colors } from "@/shared/colors";
 
 export interface FormRegisterParams {
   email: string;
@@ -35,6 +37,7 @@ export const RegisterForm = () => {
   });
 
   const { handleRegister } = useAuthContext();
+  const { handleError } = useErrorHandler();
 
   const navigation = useNavigation<NavigationProp<PublicStackParamsList>>();
 
@@ -42,7 +45,7 @@ export const RegisterForm = () => {
     try {
       await handleRegister(userData);
     } catch (error) {
-      if (error instanceof AxiosError) console.log(error.response?.data);
+      handleError(error, "Falha ao cadastrar usuario.");
     }
   };
 
@@ -84,7 +87,11 @@ export const RegisterForm = () => {
 
       <View className="flex-1 justify-between mt-8 mb-6 min-h-[250px]">
         <AppButton iconName="arrow-forward" onPress={handleSubmit(onSubmit)}>
-          Cadastrar
+          {isSubmitting ? (
+            <ActivityIndicator color={colors.white} />
+          ) : (
+            "Cadastrar"
+          )}
         </AppButton>
 
         <View>
