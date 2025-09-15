@@ -68,6 +68,7 @@ export const AppInput = <T extends FieldValues>({
                 value={value}
                 ref={inputRef}
                 onFocus={checkFocus}
+                autoCapitalize="none"
                 onChangeText={onChange}
                 onEndEditing={checkFocus}
                 secureTextEntry={showText}
