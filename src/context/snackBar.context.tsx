@@ -23,7 +23,7 @@ const SnackBarContext = createContext<SnackBarContextType>(
   {} as SnackBarContextType
 );
 
-export const SnackBarContextProviver: FC<PropsWithChildren> = ({
+export const SnackBarContextProvider: FC<PropsWithChildren> = ({
   children,
 }) => {
   const [message, setMessage] = useState<string | null>(null);
