@@ -6,6 +6,7 @@ import { CreateTransactionInterface } from "@/shared/interfaces/https/create-tra
 import { colors } from "@/shared/colors";
 import { useBottomSheetContext } from "@/context/bottomSheet.context";
 import CurrencyInput from "react-native-currency-input";
+import { TransactionTypeSelector } from "../SelectType";
 
 export const NewTransaction = () => {
   const { closeBottomSheet } = useBottomSheetContext();
@@ -53,6 +54,11 @@ export const NewTransaction = () => {
           onChangeValue={(value) => setTransactionData("value", value ?? 0)}
           prefix="R$ "
           className="text-white text-lg h-[50px] bg-background-primary my-2 rounded-[6] pl-4"
+        />
+
+        <TransactionTypeSelector
+          typeId={transaction.typeId}
+          setTransactionType={(typeId) => setTransactionData("typeId", typeId)}
         />
       </View>
     </View>

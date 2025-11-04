@@ -6,7 +6,8 @@ import { DismissKeyboardView } from "@/components/DismissKeyboardView";
 
 import { useAuthContext } from "@/context/auth.context";
 
-export const Login = () => { const {} = useAuthContext();
+export const Login = () => {
+  const {} = useAuthContext();
 
   return (
     <DismissKeyboardView>
